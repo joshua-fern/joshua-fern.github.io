@@ -28,3 +28,6 @@
 .noll-chat{display:flex;border-top:1.5px solid var(--noll-ink)}.noll-chat input{border:0}
 .noll-chat button{border:0;background:var(--noll-ink);color:#fff;padding:0 14px;cursor:pointer}
 @media (prefers-reduced-motion:reduce){.noll-ring,.noll-spin{animation:none}}
+
+.noll-msg a{color:inherit;text-decoration:underline;word-break:break-all}
+.noll-panel header b{font:600 20px "IBM Plex Mono",monospace}

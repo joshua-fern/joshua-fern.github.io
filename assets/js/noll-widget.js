@@ -1,14 +1,20 @@
 /* ===================== === MASTER CONFIGURATION === =====================
    Only edit this block. Same file is reused on both sites. */
 const NOLL_CONFIG = {
-  SITE_MODE: "founder",                       // "mech-eng" or "founder"
+  SITE_MODE: "founder",                        // "mech-eng" or "founder"
   WEB_APP_URL: "https://script.google.com/macros/s/AKfycbz3etRoO5MbEuZ33Rxej08x6NcHwjXPQEsYkd8ypHPA9C0bc-Yvin2684MwvQR4_TG-/exec",// from Apps Script -> Deploy -> Web app
   GREETING_DELAY_MS: 2500,
+  // ---- CONTACT (EDIT ME): shown when a visitor presses the "Contact Joshua" chip.
+  //      Site A (mech-eng) uses the "mech-eng" line, Site B (founder) uses the "founder" line.
+  CONTACT: {
+    "mech-eng": { email: "joshua.f1915@gmail.com", linkedin: "https://www.linkedin.com/in/joshua-sr-f" },   // <-- MECH-ENG EMAIL
+    "founder":  { email: "PUT-YOUR-FOUNDER-EMAIL@example.com", linkedin: "" }                                // <-- FOUNDER EMAIL (Site B)
+  },
   // ---- TEXT (EDIT ME): greeting bubble per site ----
   GREETING: { "mech-eng": "Here to help \u2014 ask NØLL", "founder": "Questions or a brief? Ask NØLL" },
   // ---- TEXT (EDIT ME): opening line in the chat window ----
-  WELCOME:  { "mech-eng": "Hi, I'm NØLL. Ask about Joshua's engineering work, or tick the documents you'd like emailed.",
-              "founder": "Hi, I'm NØLL. Ask about the ventures, or tick what you'd like sent." },
+  WELCOME:  { "mech-eng": "Hi, I'm NØLL. Ask me anything about Joshua's engineering work, or tick the documents you'd like emailed.",
+              "founder": "Hi, I'm NØLL. Ask me anything about Joshua's ventures, or tick what you'd like sent." },
   // ---- Quick-select chips. instant:true = real PDF emailed from Drive (IDs live in Code.gs) ----
   CHIPS: {
     "mech-eng": [
@@ -17,12 +23,14 @@ const NOLL_CONFIG = {
       { id: "cover_letter", label: "Cover Letter (Instant PDF)", instant: true },
       { id: "custom_cv", label: "Custom CV / Cover Request" },
       { id: "cert_request", label: "Unredacted Certificate Request" },
-      { id: "live", label: "Talk to Joshua Live" } ],
+      { id: "live", label: "Talk to Joshua Live" },
+      { id: "contact", label: "Contact Joshua", info: true } ],
     "founder": [
       { id: "project_deck", label: "Project Deck (Instant PDF)", instant: true },
       { id: "technical_paper", label: "Technical Paper (Instant PDF)", instant: true },
       { id: "custom_brief", label: "Custom Brief Request" },
-      { id: "live", label: "Talk to Joshua Live" } ]
+      { id: "live", label: "Talk to Joshua Live" },
+      { id: "contact", label: "Contact Joshua", info: true } ]
   },
   // ---- Certificates selectable for unredacted requests (ids match assets/certs/<id>.jpg) ----
   CERTS: { degree: "BEng (Hons) Degree", transcript: "UWE Transcript", alevels: "Cambridge A-Levels", ielts: "UKVI IELTS",
@@ -39,7 +47,7 @@ const NOLL_CONFIG = {
     <div class="noll-bubble" hidden><span></span><button aria-label="Dismiss">&times;</button></div>
     <button class="noll-launch" aria-label="Open NØLL assistant"><i class="noll-ring"></i>Ø</button>
     <section class="noll-panel" hidden aria-live="polite">
-      <header><b>Ø NØLL</b><small>${M === "founder" ? "Venture concierge" : "Engineering concierge"}</small><button class="noll-x" aria-label="Close">&times;</button></header>
+      <header><b>Ø</b><small>${M === "founder" ? "Venture concierge" : "Engineering concierge"}</small><button class="noll-x" aria-label="Close">&times;</button></header>
       <div class="noll-log"></div>
       <div class="noll-think" hidden><i class="noll-spin">Ø</i><em></em></div>
       <div class="noll-chips"></div>
@@ -59,7 +67,7 @@ const NOLL_CONFIG = {
   // --- chips ---
   C.CHIPS[M].forEach(ch => {
     const b = el(`<button type="button" class="noll-chip" data-id="${ch.id}">${ch.label}</button>`);
-    b.onclick = () => { toggle(ch.id); }; $(".noll-chips", root).appendChild(b);
+    b.onclick = () => (ch.info ? contact() : toggle(ch.id)); $(".noll-chips", root).appendChild(b);
   });
   Object.keys(C.CERTS).forEach(k => certSel.appendChild(new Option(C.CERTS[k], k)));
   function toggle(id, force) {
@@ -72,13 +80,21 @@ const NOLL_CONFIG = {
     if (sel.has("cert_request") && cert) certSel.value = cert;
   }
 
+  // --- contact details (from CONTACT above) ---
+  function contact() {
+    const c = C.CONTACT[M], m = el('<p class="noll-msg bot"></p>'); m.append("You can reach Joshua directly: ");
+    const a = document.createElement("a"); a.href = "mailto:" + c.email; a.textContent = c.email; m.append(a);
+    if (c.linkedin) { m.append(" \u00b7 "); const l = document.createElement("a"); l.href = c.linkedin; l.target = "_blank"; l.rel = "noopener"; l.textContent = "LinkedIn"; m.append(l); }
+    log.appendChild(m); log.scrollTop = log.scrollHeight;
+  }
   // --- messages ---
   function say(t, who) { const m = el(`<p class="noll-msg ${who}"></p>`); m.textContent = t; log.appendChild(m); log.scrollTop = log.scrollHeight; }
   function think(on, t) { $(".noll-think", root).hidden = !on; if (t) $(".noll-think em", root).textContent = t; busy = on; log.scrollTop = log.scrollHeight; }
   async function api(body) {
+    if (/PASTE_/.test(C.WEB_APP_URL)) throw new Error("WEB_APP_URL is not set in noll-widget.js");
     body.page = location.href;
     const r = await fetch(C.WEB_APP_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(body) });
-    return r.json();
+    const t = await r.text(); try { return JSON.parse(t); } catch (e) { throw new Error("The backend did not return JSON. Re-deploy Code.gs as a NEW VERSION (Anyone can access)."); }
   }
 
   // --- free chat (Gemini + function calling runs server-side) ---
@@ -88,7 +104,7 @@ const NOLL_CONFIG = {
     try { const r = await api({ action: "chat", message: q, history });
       history.push({ role: "user", text: q }, { role: "model", text: r.reply || "" });
       say(r.reply || r.error || "Something went wrong.", "bot");
-    } catch (x) { say("I couldn't reach the server. Please email joshua.f1915@gmail.com.", "bot"); }
+    } catch (x) { say("I couldn't reach my brain just now (" + x.message + "). Use the Contact chip to reach Joshua directly.", "bot"); }
     think(false);
   };
 
@@ -103,7 +119,7 @@ const NOLL_CONFIG = {
       say(r.ok ? (r.sent && r.sent.length ? "Sent! Check the inbox (and spam) of the address(es) you gave. " : "Request received. ") + (r.notes || []).join(" ") + " Joshua has been notified."
                : (r.error || "Something went wrong."), "bot");
       if (r.ok) { [...sel].forEach(i => toggle(i, false)); f.reset(); }
-    } catch (x) { say("I couldn't reach the server. Please email joshua.f1915@gmail.com.", "bot"); }
+    } catch (x) { say("I couldn't reach the server (" + x.message + "). Use the Contact chip to reach Joshua directly.", "bot"); }
     think(false);
   };
 

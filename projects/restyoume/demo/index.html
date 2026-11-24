@@ -1,0 +1,1156 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#09090f;--bg2:#111119;--bg3:#1a1a26;--bg4:#222230;--bg5:#2a2a3c;
+  --border:#252535;--border2:#353548;--border3:#454560;
+  --text:#eaeaf8;--text2:#9898b8;--text3:#55557a;--text4:#333348;
+  --accent:#6366f1;--accent2:#818cf8;--accent3:#c7d2fe;--accentbg:rgba(99,102,241,.12);
+  --teal:#14b8a6;--teal2:#5eead4;--tealbg:rgba(20,184,166,.1);
+  --rose:#f43f5e;--rose2:#fb7185;--rosebg:rgba(244,63,94,.1);
+  --amber:#f59e0b;--amber2:#fbbf24;--amberbg:rgba(245,158,11,.1);
+  --green:#10b981;--green2:#34d399;--greenbg:rgba(16,185,129,.1);
+  --r:10px;--r2:16px;--r3:22px;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:640px;overflow-x:hidden}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.btn{padding:8px 16px;border-radius:var(--r);border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;transition:all .15s;white-space:nowrap}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border2)}
+.btn-ghost:hover{background:var(--bg3);color:var(--text)}
+.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:#5254e8}
+.btn-teal{background:var(--teal);color:#fff}.btn-teal:hover{background:#0fa898}
+.btn-rose{background:var(--rose);color:#fff}.btn-rose:hover{background:#e0354f}
+.btn-green{background:var(--green);color:#fff}.btn-green:hover{background:#0da372}
+.btn-amber{background:var(--amber);color:#000}
+.btn-sm{padding:5px 12px;font-size:12px}
+.btn-xs{padding:3px 9px;font-size:11px;border-radius:6px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* LAYOUT */
+#root{display:flex;flex-direction:column;min-height:640px}
+#landing{display:flex;flex-direction:column;min-height:640px}
+#auth-wrap{display:none;min-height:640px;align-items:center;justify-content:center;background:var(--bg)}
+#app{display:none;height:640px;overflow:hidden}
+.app-frame{display:flex;height:640px}
+
+/* SIDEBAR */
+.sidebar{width:210px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:16px 10px}
+.s-logo{font-family:'DM Serif Display',serif;font-size:17px;padding:0 8px 16px;border-bottom:1px solid var(--border);margin-bottom:12px;color:var(--text)}
+.s-logo span{color:var(--accent2)}
+.nav-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:var(--r);cursor:pointer;font-size:13px;color:var(--text2);margin-bottom:1px;transition:all .12s;position:relative}
+.nav-item:hover{background:var(--bg3);color:var(--text)}
+.nav-item.active{background:var(--accentbg);color:var(--accent2)}
+.nav-item.active.t{background:var(--tealbg);color:var(--teal2)}
+.nav-badge{position:absolute;right:10px;background:var(--rose);color:#fff;font-size:10px;font-weight:700;border-radius:10px;padding:1px 5px;min-width:16px;text-align:center}
+.s-bottom{margin-top:auto;padding-top:12px;border-top:1px solid var(--border)}
+.user-row{display:flex;align-items:center;gap:8px;padding:8px 10px}
+.av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0}
+.av.c{background:rgba(99,102,241,.25);color:var(--accent3)}
+.av.r{background:rgba(20,184,166,.25);color:var(--teal2)}
+.un{font-size:12px;font-weight:500}
+.ur{font-size:10px;color:var(--text3)}
+
+/* MAIN */
+.main{flex:1;overflow-y:auto;background:var(--bg)}
+.panel{display:none;padding:24px 28px}
+.panel.active{display:block}
+.ph{font-family:'DM Serif Display',serif;font-size:26px;margin-bottom:3px}
+.ps{font-size:13px;color:var(--text2);margin-bottom:22px}
+
+/* CARDS */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:18px 20px;margin-bottom:14px}
+.card-sm{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:14px 16px}
+.sl{font-size:10px;color:var(--text3);font-weight:500;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px}
+.sv{font-size:22px;font-weight:700;font-family:'JetBrains Mono',monospace}
+.sv.a{color:var(--accent2)}.sv.t{color:var(--teal2)}.sv.g{color:var(--green2)}.sv.am{color:var(--amber2)}.sv.r{color:var(--rose2)}
+
+/* TAGS */
+.tag{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500;margin:2px}
+.tag.sk{background:rgba(99,102,241,.12);color:var(--accent3);border:1px solid rgba(99,102,241,.18)}
+.tag.ex{background:var(--tealbg);color:var(--teal2);border:1px solid rgba(20,184,166,.18)}
+.tag.ap{background:var(--amberbg);color:var(--amber2);border:1px solid rgba(245,158,11,.18)}
+.tag.sh{background:var(--greenbg);color:var(--green2);border:1px solid rgba(16,185,129,.18)}
+.tag.rj{background:var(--rosebg);color:var(--rose2);border:1px solid rgba(244,63,94,.18)}
+.tag.vi{background:var(--accentbg);color:var(--accent3);border:1px solid rgba(99,102,241,.18)}
+
+/* MATCH RING */
+.ring-wrap{position:relative;flex-shrink:0}
+.ring-wrap svg{display:block;transform:rotate(-90deg)}
+.ring-lbl{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'JetBrains Mono',monospace;font-weight:700;text-align:center}
+
+/* JOB CARD */
+.jc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:16px 18px;display:flex;align-items:flex-start;gap:14px;margin-bottom:10px;cursor:pointer;transition:border .12s}
+.jc:hover{border-color:var(--border3)}
+.jc.hm{border-color:rgba(99,102,241,.25)}
+.jc.auto-applied{border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.03)}
+.co-logo{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;font-family:'DM Serif Display',serif;flex-shrink:0}
+.jinfo{flex:1;min-width:0}
+.jtitle{font-size:14px;font-weight:600;margin-bottom:2px}
+.jco{font-size:12px;color:var(--text2);margin-bottom:7px}
+.jsal{font-size:13px;font-weight:600;color:var(--green2)}
+
+/* CANDIDATE CARD */
+.cc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:9px;cursor:pointer;transition:all .12s}
+.cc:hover{border-color:var(--border3)}
+.cc.sel{border-color:var(--teal);background:rgba(20,184,166,.04)}
+.cav{width:38px;height:38px;border-radius:50%;background:var(--tealbg);color:var(--teal2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;flex-shrink:0}
+.rb{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;font-family:'JetBrains Mono',monospace}
+.r1{background:rgba(245,158,11,.18);color:var(--amber2)}.r2{background:rgba(180,180,195,.1);color:#9898b8}.r3{background:rgba(180,120,80,.12);color:#c08060}.rn{background:var(--bg4);color:var(--text3)}
+
+/* FORMS */
+.field{margin-bottom:13px}
+.field label{display:block;font-size:11px;color:var(--text2);margin-bottom:5px;font-weight:500;letter-spacing:.3px}
+.field input,.field select,.field textarea{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);color:var(--text);padding:9px 11px;font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border .12s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent)}
+.field select option{background:var(--bg3)}
+.field textarea{min-height:72px;resize:vertical}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* MODAL */
+.mo{display:none;position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.75);z-index:200;align-items:center;justify-content:center;padding:20px}
+.mo.open{display:flex}
+.mb{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r2);padding:24px;width:100%;max-width:540px;max-height:90%;overflow-y:auto}
+.mt{font-family:'DM Serif Display',serif;font-size:20px;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.xb{background:none;border:none;color:var(--text2);font-size:18px;cursor:pointer;padding:2px 6px}
+
+/* CHAT */
+.chat-wrap{display:flex;height:100%;background:var(--bg)}
+.chat-list{width:200px;flex-shrink:0;border-right:1px solid var(--border);overflow-y:auto}
+.chat-item{padding:12px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s}
+.chat-item:hover,.chat-item.active{background:var(--bg3)}
+.chat-item.unread .ci-name{color:var(--text);font-weight:600}
+.ci-name{font-size:13px;color:var(--text2);margin-bottom:2px}
+.ci-preview{font-size:11px;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ci-badge{display:inline-block;background:var(--accent);color:#fff;border-radius:50%;width:16px;height:16px;font-size:9px;text-align:center;line-height:16px;float:right;margin-top:-2px}
+.chat-main{flex:1;display:flex;flex-direction:column;min-width:0}
+.chat-header{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.chat-messages{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:75%;padding:9px 13px;border-radius:12px;font-size:13px;line-height:1.5}
+.msg.them{background:var(--bg3);color:var(--text);border-radius:12px 12px 12px 3px;align-self:flex-start}
+.msg.me{background:var(--accentbg);color:var(--accent3);border:1px solid rgba(99,102,241,.2);border-radius:12px 12px 3px 12px;align-self:flex-end}
+.msg.me.comp{background:var(--tealbg);color:var(--teal2);border-color:rgba(20,184,166,.2)}
+.msg-time{font-size:10px;color:var(--text3);margin-top:2px}
+.chat-input-row{padding:10px 14px;border-top:1px solid var(--border);display:flex;gap:8px;align-items:flex-end}
+.chat-input-row textarea{flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);color:var(--text);padding:8px 11px;font-family:'DM Sans',sans-serif;font-size:13px;outline:none;resize:none;min-height:36px;max-height:80px}
+.chat-input-row textarea:focus{border-color:var(--accent)}
+
+/* AUTO APPLY */
+.aa-box{background:rgba(99,102,241,.06);border:1px solid rgba(99,102,241,.15);border-radius:var(--r2);padding:18px 20px}
+.aa-active{background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.2)}
+.aa-num{font-size:30px;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--accent2)}
+.aa-num.on{color:var(--green2)}
+.toggle-btn{width:38px;height:21px;border-radius:11px;border:none;cursor:pointer;position:relative;transition:background .15s;flex-shrink:0}
+.toggle-btn.on{background:var(--green)}.toggle-btn.off{background:var(--bg5)}
+.toggle-btn::after{content:'';position:absolute;top:2px;left:2px;width:17px;height:17px;border-radius:50%;background:#fff;transition:transform .15s}
+.toggle-btn.on::after{transform:translateX(17px)}
+
+/* MULTI-SELECT BAR */
+.ms-bar{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:10px 14px;display:flex;align-items:center;gap:10px;margin-bottom:12px;font-size:13px}
+.ms-count{font-weight:600;color:var(--teal2)}
+
+/* SECTION HEAD */
+.sh{font-size:11px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:12px}
+.div{border:none;border-top:1px solid var(--border);margin:16px 0}
+
+/* PROG */
+.pb{height:5px;background:var(--bg5);border-radius:3px;overflow:hidden}
+.pf{height:100%;border-radius:3px}
+
+/* TABS */
+.tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:18px}
+.tab{padding:8px 14px;font-size:12px;color:var(--text2);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .12s}
+.tab:hover{color:var(--text)}.tab.active{color:var(--accent2);border-bottom-color:var(--accent2)}
+.tab.active.t{color:var(--teal2);border-bottom-color:var(--teal2)}
+
+/* LANDING */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;border-bottom:1px solid var(--border)}
+.logo{font-family:'DM Serif Display',serif;font-size:20px}
+.logo span{color:var(--accent2)}
+.hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 28px;text-align:center}
+.hero-title{font-family:'DM Serif Display',serif;font-size:46px;line-height:1.1;margin-bottom:14px;color:var(--text)}
+.hero-sub{font-size:15px;color:var(--text2);max-width:440px;line-height:1.6;margin-bottom:36px}
+.hcards{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.hcard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:24px 28px;cursor:pointer;transition:all .18s;text-align:left;min-width:200px}
+.hcard:hover{border-color:var(--accent);transform:translateY(-2px)}
+.hcard.co:hover{border-color:var(--teal)}
+.hc-ic{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:18px}
+.hc-t{font-size:15px;font-weight:600;margin-bottom:5px}
+.hc-s{font-size:12px;color:var(--text2);line-height:1.5}
+
+/* AUTH */
+.auth-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:32px;width:100%;max-width:380px}
+
+/* AI response */
+.air{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:13px;margin-top:10px;font-size:12px;line-height:1.65;color:var(--text2)}
+.ai-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:var(--accent3);background:var(--accentbg);padding:2px 7px;border-radius:20px;margin-bottom:7px}
+.typing{display:inline-flex;gap:3px;padding:2px 0}
+.typing span{width:5px;height:5px;border-radius:50%;background:var(--text3);animation:blink 1.2s infinite}
+.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,100%{opacity:.3}50%{opacity:1}}
+
+input[type=range]{-webkit-appearance:none;height:4px;border-radius:2px;border:none;padding:0;background:var(--bg5);outline:none;width:100%}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--accent);cursor:pointer}
+input[type=checkbox]{accent-color:var(--accent);width:14px;height:14px}
+
+.auto-fired-badge{display:inline-flex;align-items:center;gap:4px;background:var(--greenbg);color:var(--green2);border:1px solid rgba(16,185,129,.2);border-radius:20px;padding:2px 8px;font-size:10px;font-weight:600;margin-left:6px}
+.filter-chip{padding:4px 11px;border-radius:20px;font-size:11px;border:1px solid var(--border2);color:var(--text2);cursor:pointer;background:transparent;transition:all .12s}
+.filter-chip.on{background:var(--tealbg);color:var(--teal2);border-color:rgba(20,184,166,.25)}
+.qh-banner{background:var(--rosebg);border:1px solid rgba(244,63,94,.18);border-radius:var(--r2);padding:13px 16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.msg-template{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px;margin-bottom:8px;cursor:pointer;font-size:12px;color:var(--text2);transition:border .12s}
+.msg-template:hover{border-color:var(--teal)}
+.msg-template.sel{border-color:var(--teal);color:var(--text);background:var(--tealbg)}
+.chk-row{display:flex;align-items:center;gap:8px;padding:6px 0;cursor:pointer;font-size:12px;color:var(--text2)}
+.pill-pct{display:inline-block;background:var(--accentbg);color:var(--accent2);border-radius:20px;padding:1px 7px;font-size:11px;font-family:'JetBrains Mono',monospace;font-weight:600}
+</style>
+
+<h2 class="sr-only">REStyoUMÉ — full platform with auto-apply, auto-hire matching, messaging, and chat</h2>
+
+<div id="root">
+
+<!-- LANDING -->
+<div id="landing">
+  <nav class="nav">
+    <div class="logo">REStyoU<span>MÉ</span></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-ghost btn-sm" onclick="goAuth('candidate','login')">Sign in</button>
+      <button class="btn btn-primary btn-sm" onclick="goAuth('candidate','signup')">Get started</button>
+    </div>
+  </nav>
+  <div class="hero">
+    <div style="display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:var(--accentbg);border:1px solid rgba(99,102,241,.25);border-radius:20px;font-size:11px;color:var(--accent3);margin-bottom:20px">✦ AI-Powered Hiring · Auto-Apply · Smart Messaging</div>
+    <h1 class="hero-title">Your career,<br>intelligently matched</h1>
+    <p class="hero-sub">CV parsing · match scoring · auto-apply · recruiter messaging · real-time chat — all in one platform.</p>
+    <div class="hcards">
+      <div class="hcard" onclick="goAuth('candidate','signup')">
+        <div class="hc-ic" style="background:var(--accentbg)">👤</div>
+        <div class="hc-t">I'm a Candidate</div>
+        <p class="hc-s">Set a match threshold and let auto-apply work while you sleep.</p>
+        <div style="margin-top:14px"><button class="btn btn-primary btn-sm">Start →</button></div>
+      </div>
+      <div class="hcard co" onclick="goAuth('company','signup')">
+        <div class="hc-ic" style="background:var(--tealbg)">🏢</div>
+        <div class="hc-t">I'm a Recruiter</div>
+        <p class="hc-s">Auto-match top candidates and message them in bulk with AI.</p>
+        <div style="margin-top:14px"><button class="btn btn-teal btn-sm">Start →</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AUTH -->
+<div id="auth-wrap" style="display:none;min-height:640px;align-items:center;justify-content:center;background:var(--bg)">
+  <div class="auth-box">
+    <div style="font-size:13px;color:var(--text2);cursor:pointer;margin-bottom:20px" onclick="showLanding()">← Back</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:4px" id="at">Create account</div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:20px" id="as">Join the platform</div>
+    <div style="display:flex;gap:7px;margin-bottom:18px">
+      <button class="btn btn-sm" id="bt-c" onclick="setType('candidate')" style="flex:1">Candidate</button>
+      <button class="btn btn-sm" id="bt-r" onclick="setType('company')" style="flex:1">Recruiter</button>
+    </div>
+    <div class="field"><label>Full name</label><input id="a-name" placeholder="Alex Chen"></div>
+    <div class="field" id="a-co-f" style="display:none"><label>Company name</label><input id="a-co" placeholder="Acme Corp"></div>
+    <div class="field"><label>Email</label><input type="email" id="a-email" placeholder="you@example.com"></div>
+    <div class="field"><label>Password</label><input type="password" id="a-pass" placeholder="••••••••"></div>
+    <button class="btn btn-primary" style="width:100%;padding:10px;margin-bottom:14px" onclick="doAuth()">Continue</button>
+    <div style="text-align:center;font-size:11px;color:var(--text3);margin-bottom:10px">— demo logins —</div>
+    <div style="display:flex;gap:7px">
+      <button class="btn btn-ghost btn-sm" style="flex:1" onclick="demo('candidate')">Demo Candidate</button>
+      <button class="btn btn-ghost btn-sm" style="flex:1" onclick="demo('company')">Demo Recruiter</button>
+    </div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" style="display:none;height:640px;overflow:hidden;position:relative">
+  <div class="app-frame">
+    <div class="sidebar" id="sb">
+      <div class="s-logo">REStyoU<span>MÉ</span></div>
+      <div id="sb-nav"></div>
+      <div class="s-bottom">
+        <div class="user-row">
+          <div class="av" id="sb-av"></div>
+          <div><div class="un" id="sb-n"></div><div class="ur" id="sb-r"></div></div>
+        </div>
+        <button class="btn btn-ghost btn-xs" style="width:100%;margin-top:6px" onclick="showLanding()">Sign out</button>
+      </div>
+    </div>
+    <div class="main" id="mpanels"></div>
+  </div>
+  <div class="mo" id="modal"><div class="mb" id="mc"></div></div>
+</div>
+
+</div>
+
+<script>
+const S={user:null,type:'candidate',authMode:'signup',panel:'',aaOn:false,aaThresh:75,qaOn:false,qaThresh:70,sel:new Set(),shortlisted:new Set(),chats:{},activeChatId:null,unread:{}};
+
+const DC={name:'Alex Chen',email:'alex@demo.com',type:'candidate',title:'Sr. Frontend Engineer',loc:'San Francisco, CA',salary:140000,skills:['React','TypeScript','Node.js','GraphQL','AWS','Python','Next.js','Figma'],cvScore:78,
+  exp:[{co:'Stripe',role:'Sr. Frontend Engineer',dur:'2021–now',bullets:['Led payment UI redesign boosting conversion 23%','Cut bundle size 41% via code splitting']},{co:'Airbnb',role:'Frontend Engineer',dur:'2019–2021',bullets:['Built host dashboard for 4M+ users']}],
+  edu:[{school:'UC Berkeley',deg:'B.S. Computer Science',yr:'2019'}]};
+const DR={name:'Sarah Kim',email:'sarah@acme.com',type:'company',company:'Acme Corp'};
+
+const JOBS=[
+  {id:1,title:'Senior React Engineer',co:'Stripe',logo:'S',col:'#635bff',sal:'$130k–$160k',loc:'SF/Remote',type:'Full-time',skills:['React','TypeScript','GraphQL','Node.js'],exp:'4+yr',match:92,posted:'2d'},
+  {id:2,title:'Staff Frontend Engineer',co:'Linear',logo:'L',col:'#5e6ad2',sal:'$150k–$190k',loc:'Remote',type:'Full-time',skills:['React','TypeScript','Performance'],exp:'6+yr',match:84,posted:'1d'},
+  {id:3,title:'Frontend Engineer II',co:'Figma',logo:'F',col:'#0acf83',sal:'$120k–$150k',loc:'NYC/Remote',type:'Full-time',skills:['React','Canvas','TypeScript'],exp:'3+yr',match:79,posted:'3d'},
+  {id:4,title:'React Native Engineer',co:'Coinbase',logo:'C',col:'#0052ff',sal:'$125k–$165k',loc:'Remote',type:'Full-time',skills:['React Native','TypeScript'],exp:'3+yr',match:61,posted:'5d'},
+  {id:5,title:'Frontend Architect',co:'Vercel',logo:'V',col:'#888',sal:'$160k–$200k',loc:'Remote',type:'Full-time',skills:['Next.js','React','Webpack'],exp:'7+yr',match:88,posted:'1d'},
+  {id:6,title:'React Engineer',co:'Notion',logo:'N',col:'#000',sal:'$110k–$140k',loc:'SF',type:'Full-time',skills:['React','TypeScript','CSS'],exp:'2+yr',match:71,posted:'4d'},
+];
+
+const CANDS=[
+  {id:1,name:'Alex Chen',title:'Sr Frontend Engineer',skills:['React','TypeScript','GraphQL'],exp:5,salary:140000,loc:'SF',match:92,av:'AC',cvScore:78,status:'active'},
+  {id:2,name:'Jordan Lee',title:'Full Stack Engineer',skills:['React','Python','AWS'],exp:4,salary:120000,loc:'Remote',match:86,av:'JL',cvScore:82,status:'active'},
+  {id:3,name:'Maya Patel',title:'Frontend Engineer',skills:['React','TypeScript','CSS'],exp:3,salary:105000,loc:'NYC',match:79,av:'MP',cvScore:71,status:'active'},
+  {id:4,name:'Chris Wu',title:'React Native Dev',skills:['React Native','TypeScript'],exp:4,salary:130000,loc:'Remote',match:74,av:'CW',cvScore:75,status:'passive'},
+  {id:5,name:'Sam Torres',title:'Staff Engineer',skills:['React','Next.js'],exp:7,salary:175000,loc:'SF',match:68,av:'ST',cvScore:89,status:'active'},
+  {id:6,name:'Priya Nair',title:'Frontend Dev',skills:['React','CSS','Figma'],exp:2,salary:95000,loc:'Remote',match:55,av:'PN',cvScore:62,status:'passive'},
+];
+
+const APPS=[
+  {jid:1,co:'Stripe',title:'Senior React Engineer',status:'shortlisted',date:'2d',auto:false},
+  {jid:5,co:'Vercel',title:'Frontend Architect',status:'viewed',date:'1d',auto:true},
+  {jid:3,co:'Figma',title:'Frontend Engineer II',status:'applied',date:'3d',auto:false},
+];
+
+function mc(){return S.matchColor||matchColor}
+function matchColor(s){return s>=85?'var(--green2)':s>=70?'var(--accent2)':s>=55?'var(--amber2)':'var(--rose2)'}
+
+function ring(score,sz=50,sw=5){
+  const r=(sz/2)-sw;const c=2*Math.PI*r;const f=c*(score/100);const col=matchColor(score);
+  return `<div class="ring-wrap" style="width:${sz}px;height:${sz}px">
+    <svg width="${sz}" height="${sz}" viewBox="0 0 ${sz} ${sz}">
+      <circle cx="${sz/2}" cy="${sz/2}" r="${r}" fill="none" stroke="var(--bg5)" stroke-width="${sw}"/>
+      <circle cx="${sz/2}" cy="${sz/2}" r="${r}" fill="none" stroke="${col}" stroke-width="${sw}" stroke-dasharray="${f} ${c}" stroke-linecap="round"/>
+    </svg>
+    <div class="ring-lbl" style="font-size:${sz<55?'10':'12'}px;color:${col}">${score}%</div>
+  </div>`;
+}
+
+function showLanding(){
+  document.getElementById('landing').style.display='flex';
+  document.getElementById('landing').style.flexDirection='column';
+  document.getElementById('auth-wrap').style.display='none';
+  document.getElementById('app').style.display='none';
+  S.user=null;
+}
+
+function goAuth(type,mode){
+  S.type=type;S.authMode=mode;
+  document.getElementById('landing').style.display='none';
+  document.getElementById('auth-wrap').style.display='flex';
+  setType(type);
+}
+
+function setType(t){
+  S.type=t;
+  document.getElementById('a-co-f').style.display=t==='company'?'block':'none';
+  document.getElementById('bt-c').className='btn btn-sm '+(t==='candidate'?'btn-primary':'btn-ghost');
+  document.getElementById('bt-r').className='btn btn-sm '+(t==='company'?'btn-teal':'btn-ghost');
+  document.getElementById('at').textContent=S.authMode==='signup'?'Create account':'Welcome back';
+}
+
+function doAuth(){
+  const n=document.getElementById('a-name').value||'User';
+  const co=document.getElementById('a-co').value||'Acme Corp';
+  S.user=S.type==='candidate'?{...DC,name:n}:{...DR,name:n,company:co};
+  launch();
+}
+
+function demo(t){
+  S.type=t;S.user=t==='candidate'?{...DC}:{...DR};
+  launch();
+}
+
+function launch(){
+  document.getElementById('auth-wrap').style.display='none';
+  document.getElementById('app').style.display='block';
+  const u=S.user;const isC=u.type==='company';
+  const av=document.getElementById('sb-av');
+  av.textContent=u.name.split(' ').map(w=>w[0]).join('').slice(0,2);
+  av.className='av '+(isC?'r':'c');
+  document.getElementById('sb-n').textContent=u.name;
+  document.getElementById('sb-r').textContent=isC?(u.company||'Recruiter'):'Candidate';
+  initChats();
+  buildNav(isC);
+  buildPanels(isC);
+  showPanel(isC?'dash':'dash');
+}
+
+function initChats(){
+  if(S.user.type==='candidate'){
+    S.chats={
+      'Stripe':{name:'Stripe Recruiting',av:'S',col:'#635bff',msgs:[
+        {from:'them',text:'Hi Alex! We saw your profile and think you\'d be a great fit for our Senior React Engineer role. Are you interested?',time:'2h ago'},
+        {from:'them',text:'Your match score with this role is 92% — one of the highest we\'ve seen!',time:'2h ago'},
+      ]},
+      'Vercel':{name:'Vercel Talent',av:'V',col:'#888',msgs:[
+        {from:'them',text:'Hey Alex — are you open to exploring the Frontend Architect opportunity at Vercel? Your background looks like an excellent match (88%).',time:'1d ago'},
+      ]},
+      'Linear':{name:'Linear HR',av:'L',col:'#5e6ad2',msgs:[
+        {from:'them',text:'We\'d love to connect about the Staff Frontend Engineer position. Would you be open to a quick call?',time:'3d ago'},
+      ]},
+    };
+    S.unread={'Stripe':2,'Vercel':1};
+    S.activeChatId='Stripe';
+  } else {
+    S.chats={
+      'Alex Chen':{name:'Alex Chen',av:'AC',col:'#6366f1',msgs:[
+        {from:'them',text:'Thanks for reaching out! I\'m very interested in the Senior React role.',time:'1h ago'},
+        {from:'me',text:'Great! We\'d love to schedule a technical interview. Are you available this week?',time:'45m ago'},
+        {from:'them',text:'Absolutely — Thursday or Friday works well for me.',time:'30m ago'},
+      ]},
+      'Jordan Lee':{name:'Jordan Lee',av:'JL',col:'#14b8a6',msgs:[
+        {from:'me',text:'Hi Jordan! Are you interested in our Senior React Engineer role? Your match score is 86%.',time:'2h ago'},
+        {from:'them',text:'Hi! Yes, I\'d love to learn more about the position.',time:'1h ago'},
+      ]},
+      'Maya Patel':{name:'Maya Patel',av:'MP',col:'#f43f5e',msgs:[
+        {from:'me',text:'Hi Maya! We think you could be a great fit for our Frontend Engineer opening. Interested?',time:'5h ago'},
+      ]},
+    };
+    S.unread={'Alex Chen':1};
+    S.activeChatId='Alex Chen';
+  }
+}
+
+function buildNav(isC){
+  const items=isC?[
+    {id:'dash',icon:'▦',label:'Dashboard'},
+    {id:'post',icon:'＋',label:'Post Role'},
+    {id:'cands',icon:'◉',label:'Candidates'},
+    {id:'shortlist',icon:'★',label:'Shortlist'},
+    {id:'messages',icon:'✉',label:'Messages',badge:true},
+    {id:'chat',icon:'💬',label:'Chat',badge:true},
+    {id:'auto-hire',icon:'⚡',label:'Auto-Hire'},
+    {id:'co-profile',icon:'◻',label:'Profile'},
+  ]:[
+    {id:'dash',icon:'▦',label:'Dashboard'},
+    {id:'jobs',icon:'◉',label:'Browse Jobs'},
+    {id:'applications',icon:'◈',label:'Applications'},
+    {id:'my-cv',icon:'◻',label:'My CV'},
+    {id:'chat',icon:'💬',label:'Chat',badge:true},
+    {id:'ai-tools',icon:'✦',label:'AI Tools'},
+    {id:'auto-apply',icon:'⚡',label:'Auto-Apply'},
+  ];
+  document.getElementById('sb-nav').innerHTML=items.map(i=>`
+    <div class="nav-item" id="nav-${i.id}" onclick="showPanel('${i.id}')">
+      <span style="font-size:12px;width:14px;text-align:center">${i.icon}</span>
+      <span style="flex:1">${i.label}</span>
+      ${i.badge?`<span class="nav-badge" id="badge-${i.id}" style="display:none">0</span>`:''}
+    </div>`).join('');
+  updateBadges();
+}
+
+function updateBadges(){
+  const total=Object.values(S.unread||{}).reduce((a,b)=>a+b,0);
+  const cb=document.getElementById('badge-chat');const mb=document.getElementById('badge-messages');
+  if(cb){cb.textContent=total;cb.style.display=total>0?'block':'none';}
+  if(mb){mb.textContent=total;mb.style.display=total>0?'block':'none';}
+}
+
+function buildPanels(isC){
+  document.getElementById('mpanels').innerHTML=isC?buildRecruiterPanels():buildCandidatePanels();
+}
+
+function showPanel(id){
+  S.panel=id;
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active','t'));
+  const p=document.getElementById('p-'+id);if(p)p.classList.add('active');
+  const n=document.getElementById('nav-'+id);
+  const isC=S.user&&S.user.type==='company';
+  if(n){n.classList.add('active');if(isC)n.classList.add('t');}
+  if(id==='chat')renderChat();
+  if(id==='shortlist')renderShortlist();
+  if(id==='auto-hire')renderAutoHire();
+  if(id==='auto-apply')renderAutoApply();
+  if(id==='cands')renderCands();
+}
+
+function openModal(){document.getElementById('modal').classList.add('open');return document.getElementById('mc')}
+function closeModal(){document.getElementById('modal').classList.remove('open')}
+
+function jobCard(j){
+  const autoApplied=S.aaOn&&j.match>=S.aaThresh;
+  return `<div class="jc ${j.match>=80?'hm':''} ${autoApplied?'auto-applied':''}" onclick="openJob(${j.id})">
+    <div class="co-logo" style="background:${j.col}18;color:${j.col}">${j.logo}</div>
+    <div class="jinfo">
+      <div class="jtitle">${j.title}${autoApplied?'<span class="auto-fired-badge">⚡ Auto-Applied</span>':''}</div>
+      <div class="jco">${j.co} · ${j.loc} · ${j.type}</div>
+      <div style="margin-bottom:7px">${j.skills.map(s=>`<span class="tag sk">${s}</span>`).join('')}</div>
+      <div style="display:flex;align-items:center;justify-content:space-between"><span class="jsal">${j.sal}</span><span style="font-size:10px;color:var(--text3)">${j.posted} ago</span></div>
+    </div>
+    ${ring(j.match,48,5)}
+  </div>`;
+}
+
+function candCard(c,idx){
+  const star=S.shortlisted.has(c.id);
+  const rankC=idx===0?'r1':idx===1?'r2':idx===2?'r3':'rn';
+  const autoQ=S.qaOn&&c.match>=S.qaThresh;
+  return `<div class="cc ${S.sel.has(c.id)?'sel':''}" onclick="toggleSel(${c.id},this)">
+    <input type="checkbox" onclick="event.stopPropagation()" onchange="chkCand(${c.id},this)" ${S.sel.has(c.id)?'checked':''}>
+    <div class="rb ${rankC}">${idx+1}</div>
+    <div class="cav">${c.av}</div>
+    <div style="flex:1;min-width:0">
+      <div style="font-size:13px;font-weight:600">${c.name}${autoQ?'<span class="auto-fired-badge">⚡ Auto-Matched</span>':''}</div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:5px">${c.title} · ${c.loc}</div>
+      <div>${c.skills.slice(0,2).map(s=>`<span class="tag ex">${s}</span>`).join('')}</div>
+    </div>
+    <div style="text-align:right">
+      ${ring(c.match,44,4)}
+      <div style="font-size:10px;color:var(--text3);margin-top:2px">${c.exp}yr exp</div>
+    </div>
+    <button onclick="event.stopPropagation();starCand(${c.id},this)" style="background:none;border:none;cursor:pointer;font-size:16px;color:${star?'var(--amber2)':'var(--text3)'};padding:2px 4px">${star?'★':'☆'}</button>
+    <button onclick="event.stopPropagation();chatWith('${c.name}')" class="btn btn-teal btn-xs" title="Chat">💬</button>
+  </div>`;
+}
+
+function toggleSel(id,el){
+  if(S.sel.has(id)){S.sel.delete(id);el.classList.remove('sel')}
+  else{S.sel.add(id);el.classList.add('sel')}
+  renderMultiBar();
+}
+function chkCand(id,chk){
+  if(chk.checked)S.sel.add(id);else S.sel.delete(id);
+  document.querySelectorAll('.cc').forEach((el,i)=>{if(CANDS[i]&&S.sel.has(CANDS[i].id))el.classList.add('sel');else el.classList.remove('sel')});
+  renderMultiBar();
+}
+function renderMultiBar(){
+  const bar=document.getElementById('ms-bar');if(!bar)return;
+  if(S.sel.size>0){
+    bar.style.display='flex';
+    document.getElementById('ms-count').textContent=S.sel.size;
+  } else {bar.style.display='none';}
+}
+function selectAll(){CANDS.forEach(c=>S.sel.add(c.id));renderCands()}
+function clearSel(){S.sel.clear();renderCands()}
+
+function starCand(id,btn){
+  if(S.shortlisted.has(id)){S.shortlisted.delete(id);btn.style.color='var(--text3)';btn.textContent='☆'}
+  else{S.shortlisted.add(id);btn.style.color='var(--amber2)';btn.textContent='★'}
+}
+
+function renderCands(){
+  const list=document.getElementById('cand-list');if(!list)return;
+  list.innerHTML=CANDS.map((c,i)=>candCard(c,i)).join('');
+  renderMultiBar();
+}
+
+function renderShortlist(){
+  const el=document.getElementById('sl-panel');if(!el)return;
+  const s=CANDS.filter(c=>S.shortlisted.has(c.id));
+  el.innerHTML=s.length?s.map((c,i)=>candCard(c,i)).join(''):`<div style="text-align:center;padding:30px;color:var(--text3);font-size:13px">Star candidates from the Candidates tab</div>`;
+}
+
+function renderAutoApply(){
+  const el=document.getElementById('aa-content');if(!el)return;
+  const eligible=JOBS.filter(j=>j.match>=S.aaThresh);
+  el.innerHTML=`
+    <div class="aa-box ${S.aaOn?'aa-active':''}" id="aa-box">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div>
+          <div style="font-size:14px;font-weight:600">Auto-Apply Engine</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:2px">Applies automatically when match ≥ threshold</div>
+        </div>
+        <button class="toggle-btn ${S.aaOn?'on':'off'}" id="aa-toggle" onclick="toggleAA()"></button>
+      </div>
+      <div style="font-size:10px;color:var(--amber2);background:var(--amberbg);border-radius:6px;padding:6px 10px;margin-bottom:14px">⚠ By enabling, you consent to automated job applications on your behalf</div>
+      <div class="sh">Match threshold</div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px">
+        <div class="aa-num ${S.aaOn?'on':''}" id="aa-num">${S.aaThresh}%</div>
+        <div style="font-size:12px;color:var(--text2)">or higher</div>
+      </div>
+      <input type="range" min="50" max="99" step="1" value="${S.aaThresh}" oninput="setAAThresh(this.value)" style="margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-bottom:16px"><span>50%</span><span>Threshold</span><span>99%</span></div>
+      <hr class="div">
+      <div class="sh">Eligible jobs at this threshold (${eligible.length})</div>
+      ${eligible.length?eligible.map(j=>`
+        <div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)">
+          <div class="co-logo" style="width:32px;height:32px;font-size:12px;background:${j.col}18;color:${j.col}">${j.logo}</div>
+          <div style="flex:1"><div style="font-size:12px;font-weight:500">${j.title}</div><div style="font-size:11px;color:var(--text2)">${j.co}</div></div>
+          ${ring(j.match,36,4)}
+          ${S.aaOn?`<span class="auto-fired-badge">⚡ Applied</span>`:'<span style="font-size:10px;color:var(--text3)">Pending</span>'}
+        </div>`).join(''):`<div style="font-size:12px;color:var(--text3);padding:8px 0">No jobs meet this threshold. Lower the slider to see matches.</div>`}
+      <hr class="div">
+      <div class="sh">Filters</div>
+      <label class="chk-row"><input type="checkbox" checked> Only remote roles</label>
+      <label class="chk-row"><input type="checkbox" checked> Salary within my range</label>
+      <label class="chk-row"><input type="checkbox"> Full-time only</label>
+    </div>`;
+}
+
+function toggleAA(){S.aaOn=!S.aaOn;renderAutoApply();const p=document.getElementById('p-jobs');if(p)p.innerHTML=buildJobsPanel();}
+function setAAThresh(v){S.aaThresh=parseInt(v);renderAutoApply();}
+
+function renderAutoHire(){
+  const el=document.getElementById('ah-content');if(!el)return;
+  const eligible=CANDS.filter(c=>c.match>=S.qaThresh);
+  el.innerHTML=`
+    <div class="aa-box ${S.qaOn?'aa-active':''}" id="ah-box">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div>
+          <div style="font-size:14px;font-weight:600">Auto-Hire Matching</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:2px">Surface & invite candidates above match threshold</div>
+        </div>
+        <button class="toggle-btn ${S.qaOn?'on':'off'}" id="qa-toggle" onclick="toggleQA()"></button>
+      </div>
+      <div style="font-size:10px;color:var(--amber2);background:var(--amberbg);border-radius:6px;padding:6px 10px;margin-bottom:14px">⚡ Candidates above threshold are auto-surfaced and can receive bulk invite messages</div>
+      <div class="sh">Match threshold</div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px">
+        <div class="aa-num ${S.qaOn?'on':''}" id="qa-num">${S.qaThresh}%</div>
+        <div style="font-size:12px;color:var(--text2)">or higher</div>
+      </div>
+      <input type="range" min="50" max="99" step="1" value="${S.qaThresh}" oninput="setQAThresh(this.value)" style="margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-bottom:16px"><span>50%</span><span>Threshold</span><span>99%</span></div>
+      <hr class="div">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div class="sh" style="margin:0">Matched candidates (${eligible.length})</div>
+        ${eligible.length?`<button class="btn btn-teal btn-xs" onclick="bulkInviteEligible()">⚡ Bulk Invite All</button>`:''}
+      </div>
+      ${eligible.length?eligible.map((c,i)=>`
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">
+          <div class="rb ${i===0?'r1':i===1?'r2':i===2?'r3':'rn'}">${i+1}</div>
+          <div class="cav" style="width:32px;height:32px;font-size:11px">${c.av}</div>
+          <div style="flex:1"><div style="font-size:12px;font-weight:500">${c.name}</div><div style="font-size:11px;color:var(--text2)">${c.title}</div></div>
+          ${ring(c.match,36,4)}
+          ${S.qaOn?`<span class="auto-fired-badge">⚡ Surfaced</span>`:'<span style="font-size:10px;color:var(--text3)">Pending</span>'}
+          <button class="btn btn-teal btn-xs" onclick="openMsgModal([${c.id}])">Invite</button>
+        </div>`).join(''):`<div style="font-size:12px;color:var(--text3);padding:8px 0">No candidates meet this threshold yet.</div>`}
+    </div>`;
+}
+
+function toggleQA(){S.qaOn=!S.qaOn;renderAutoHire();renderCands();}
+function setQAThresh(v){S.qaThresh=parseInt(v);renderAutoHire();}
+function bulkInviteEligible(){openMsgModal(CANDS.filter(c=>c.match>=S.qaThresh).map(c=>c.id));}
+
+function renderChat(){
+  const el=document.getElementById('chat-panel');if(!el)return;
+  const isC=S.user.type==='company';
+  el.innerHTML=`<div class="chat-wrap" style="height:520px">
+    <div class="chat-list">
+      ${Object.entries(S.chats).map(([k,ch])=>`
+        <div class="chat-item ${S.activeChatId===k?'active':''} ${S.unread[k]?'unread':''}" onclick="switchChat('${k}')">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div class="ci-name">${ch.name}</div>
+            ${S.unread[k]?`<span class="ci-badge">${S.unread[k]}</span>`:''}
+          </div>
+          <div class="ci-preview">${ch.msgs[ch.msgs.length-1]?.text||'No messages yet'}</div>
+        </div>`).join('')}
+    </div>
+    <div class="chat-main">
+      <div class="chat-header">
+        <div class="cav" style="width:32px;height:32px;font-size:11px;background:${S.chats[S.activeChatId]?.col||'#666'}22;color:${S.chats[S.activeChatId]?.col||'#666'}">${S.chats[S.activeChatId]?.av||'?'}</div>
+        <div style="flex:1"><div style="font-size:13px;font-weight:600">${S.chats[S.activeChatId]?.name||''}</div><div style="font-size:10px;color:var(--text3)">Online</div></div>
+        ${isC?`<button class="btn btn-ghost btn-xs" onclick="aiQuickMsg()">✦ AI Reply</button>`:''}
+      </div>
+      <div class="chat-messages" id="chat-msgs" style="max-height:360px;overflow-y:auto">${renderMessages()}</div>
+      <div class="chat-input-row">
+        <textarea id="chat-inp" placeholder="Type a message..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg()}"></textarea>
+        <button class="btn btn-primary btn-sm" onclick="sendMsg()">Send</button>
+      </div>
+    </div>
+  </div>`;
+  scrollChat();
+}
+
+function renderMessages(){
+  const ch=S.chats[S.activeChatId];if(!ch)return '';
+  return ch.msgs.map(m=>`<div>
+    <div class="msg ${m.from==='me'?'me comp':'them'}">${m.text}</div>
+    <div class="msg-time" style="text-align:${m.from==='me'?'right':'left'}">${m.time||'now'}</div>
+  </div>`).join('');
+}
+
+function scrollChat(){setTimeout(()=>{const el=document.getElementById('chat-msgs');if(el)el.scrollTop=el.scrollHeight;},50);}
+
+function switchChat(k){
+  S.activeChatId=k;
+  delete S.unread[k];
+  updateBadges();
+  renderChat();
+}
+
+function sendMsg(){
+  const inp=document.getElementById('chat-inp');if(!inp)return;
+  const txt=inp.value.trim();if(!txt)return;
+  const ch=S.chats[S.activeChatId];if(!ch)return;
+  ch.msgs.push({from:'me',text:txt,time:'just now'});
+  inp.value='';
+  const msgs=document.getElementById('chat-msgs');
+  if(msgs){msgs.innerHTML=renderMessages();scrollChat();}
+}
+
+function chatWith(name){
+  if(!S.chats[name])S.chats[name]={name,av:name.split(' ').map(w=>w[0]).join(''),col:'#6366f1',msgs:[]};
+  S.activeChatId=name;
+  showPanel('chat');
+}
+
+async function aiQuickMsg(){
+  const ch=S.chats[S.activeChatId];if(!ch)return;
+  const last=ch.msgs.filter(m=>m.from==='them').pop();
+  const prompt=`You are a friendly recruiter. Write a short, warm 1-2 sentence reply to this candidate message: "${last?.text||'Hello'}". Be professional and encouraging.`;
+  const inp=document.getElementById('chat-inp');if(!inp)return;
+  inp.value='Generating...';inp.disabled=true;
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:150,messages:[{role:'user',content:prompt}]})});
+    const d=await r.json();
+    inp.value=d.content?.find(b=>b.type==='text')?.text||'Thanks for your message! We\'d love to connect.';
+  }catch{inp.value='Thanks for your interest! We\'d love to chat further about this opportunity.';}
+  inp.disabled=false;
+}
+
+function openMsgModal(ids){
+  const names=ids.map(id=>CANDS.find(c=>c.id===id)?.name||'').filter(Boolean);
+  const m=openModal();
+  m.innerHTML=`<div class="mt">Compose Message <button class="xb" onclick="closeModal()">✕</button></div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:14px">Sending to: <span style="color:var(--teal2)">${names.join(', ')}</span> (${ids.length} candidate${ids.length!==1?'s':''})</div>
+    <div class="sh">Quick templates</div>
+    <div class="msg-template" id="tpl-1" onclick="selectTpl(1,'Are you interested in our Senior React Engineer opening? Your profile is a strong match at ${ids.map(id=>CANDS.find(c=>c.id===id)?.match||'').filter(Boolean)[0]||'80'}% — we\'d love to chat!')">
+      <div style="font-weight:600;color:var(--text);margin-bottom:3px">Interest check</div>
+      Are you interested in our role? Your profile matches strongly — we'd love to connect.
+    </div>
+    <div class="msg-template" id="tpl-2" onclick="selectTpl(2,'Hi! We came across your profile and think you\'d be a great fit for a role at Acme Corp. Would you be open to a quick 15-minute call to discuss?')">
+      <div style="font-weight:600;color:var(--text);margin-bottom:3px">Intro call request</div>
+      We'd love to schedule a quick 15-minute intro call to explore the opportunity.
+    </div>
+    <div class="msg-template" id="tpl-3" onclick="selectTpl(3,'Congratulations — based on your skills and experience, you\'ve been shortlisted for our Senior React Engineer role. Next step: a technical interview. Are you available this week?')">
+      <div style="font-weight:600;color:var(--text);margin-bottom:3px">Shortlist notification</div>
+      You've been shortlisted! We'd love to invite you to the next stage.
+    </div>
+    <hr class="div">
+    <div class="sh">Or write custom message</div>
+    <div class="field"><textarea id="msg-body" placeholder="Type your message here..." style="min-height:90px"></textarea></div>
+    <div style="display:flex;gap:8px;margin-bottom:14px">
+      <button class="btn btn-ghost btn-sm" onclick="aiGenMsg(${JSON.stringify(ids)})">✦ AI Generate</button>
+      <button class="btn btn-ghost btn-sm" onclick="document.getElementById('msg-body').value=''">Clear</button>
+    </div>
+    <div class="air" id="msg-ai-out" style="display:none"></div>
+    <hr class="div">
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-teal" style="flex:1" onclick="sendBulkMsg(${JSON.stringify(ids)})">Send to ${ids.length} candidate${ids.length!==1?'s':''}</button>
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+    </div>`;
+}
+
+function selectTpl(n,text){
+  document.querySelectorAll('.msg-template').forEach(t=>t.classList.remove('sel'));
+  document.getElementById('tpl-'+n).classList.add('sel');
+  document.getElementById('msg-body').value=text;
+}
+
+async function aiGenMsg(ids){
+  const names=ids.map(id=>CANDS.find(c=>c.id===id)?.name||'').filter(Boolean);
+  const matches=ids.map(id=>CANDS.find(c=>c.id===id)?.match||80);
+  const out=document.getElementById('msg-ai-out');
+  out.style.display='block';
+  out.innerHTML=`<div class="ai-badge">✦ Claude</div><div class="typing"><span></span><span></span><span></span></div>`;
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:200,messages:[{role:'user',content:`Write a short, warm recruiter outreach message (2-3 sentences) to ${names.join(' and ')} about a Senior React Engineer role at Acme Corp. Their match scores are ${matches.join('%, ')}%. Include that they are a strong match. Sound friendly, not salesy.`}]})});
+    const d=await r.json();
+    const txt=d.content?.find(b=>b.type==='text')?.text||'Hi! We think you\'d be a great fit for our Senior React Engineer role. Would you be open to connecting?';
+    out.innerHTML=`<div class="ai-badge">✦ Claude</div><div>${txt}</div>`;
+    document.getElementById('msg-body').value=txt;
+  }catch{
+    const fb='Hi! We came across your profile and believe you\'d be a great match for our Senior React Engineer opening. Would you be open to a quick conversation?';
+    out.innerHTML=`<div class="ai-badge">✦ Claude</div><div>${fb}</div>`;
+    document.getElementById('msg-body').value=fb;
+  }
+}
+
+function sendBulkMsg(ids){
+  const txt=document.getElementById('msg-body').value.trim();
+  if(!txt){alert('Please write or select a message first.');return;}
+  ids.forEach(id=>{
+    const c=CANDS.find(x=>x.id===id);if(!c)return;
+    if(!S.chats[c.name])S.chats[c.name]={name:c.name,av:c.av,col:'#14b8a6',msgs:[]};
+    S.chats[c.name].msgs.push({from:'me',text:txt,time:'just now'});
+  });
+  closeModal();
+  S.sel.clear();
+  const names=ids.map(id=>CANDS.find(c=>c.id===id)?.name||'').join(', ');
+  showToast(`Message sent to ${ids.length} candidate${ids.length!==1?'s':''}`);
+}
+
+function showToast(msg){
+  const t=document.createElement('div');
+  t.style.cssText='position:absolute;bottom:20px;right:20px;background:var(--green);color:#fff;padding:10px 16px;border-radius:10px;font-size:13px;z-index:300;font-weight:500';
+  t.textContent='✓ '+msg;
+  document.getElementById('app').appendChild(t);
+  setTimeout(()=>t.remove(),3000);
+}
+
+function openJob(id){
+  const j=JOBS.find(x=>x.id===id);if(!j)return;
+  const m=openModal();
+  m.innerHTML=`<div class="mt">${j.title} <button class="xb" onclick="closeModal()">✕</button></div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+      <div class="co-logo" style="background:${j.col}18;color:${j.col}">${j.logo}</div>
+      <div style="flex:1"><div style="font-size:14px;font-weight:600">${j.co}</div><div style="font-size:12px;color:var(--text2)">${j.loc} · ${j.type}</div></div>
+      ${ring(j.match,52,5)}
+    </div>
+    <div style="margin-bottom:12px">${j.skills.map(s=>`<span class="tag sk">${s}</span>`).join('')}</div>
+    <div style="display:flex;gap:14px;margin-bottom:14px">
+      <div><div style="font-size:10px;color:var(--text3)">SALARY</div><div style="font-size:13px;font-weight:600;color:var(--green2)">${j.sal}</div></div>
+      <div><div style="font-size:10px;color:var(--text3)">EXPERIENCE</div><div style="font-size:13px;font-weight:600">${j.exp}</div></div>
+      <div><div style="font-size:10px;color:var(--text3)">POSTED</div><div style="font-size:13px;font-weight:600">${j.posted} ago</div></div>
+    </div>
+    <div class="card-sm" style="margin-bottom:14px">
+      <div class="ai-badge">✦ Match Analysis</div>
+      <p style="font-size:12px;color:var(--text2);line-height:1.6">Your React, TypeScript, and Node.js skills directly align with core requirements. Your Stripe experience demonstrates the scale they need. Match score: <span class="pill-pct">${j.match}%</span>.</p>
+    </div>
+    ${S.aaOn&&j.match>=S.aaThresh?`<div style="background:var(--greenbg);border:1px solid rgba(16,185,129,.2);border-radius:var(--r);padding:10px 12px;margin-bottom:12px;font-size:12px;color:var(--green2)">⚡ Auto-Apply fired — application sent automatically (threshold: ${S.aaThresh}%)</div>`:''}
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-primary" style="flex:1" onclick="manualApply(${j.id},'${j.title}','${j.co}')">Apply Now</button>
+      <button class="btn btn-ghost btn-sm" onclick="aiCoverLetterFor('${j.title}','${j.co}',this)">✦ Cover Letter</button>
+    </div>
+    <div class="air" id="cl-out" style="display:none"></div>`;
+}
+
+async function aiCoverLetterFor(title,co,btn){
+  const out=document.getElementById('cl-out');out.style.display='block';
+  out.innerHTML=`<div class="ai-badge">✦ Claude</div><div class="typing"><span></span><span></span><span></span></div>`;
+  btn.disabled=true;btn.textContent='Generating...';
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:250,messages:[{role:'user',content:`Write a compelling 3-sentence cover letter opening for ${DC.name}, a Senior Frontend Engineer with React/TypeScript expertise, applying to ${title} at ${co}. Be specific and confident.`}]})});
+    const d=await r.json();
+    out.innerHTML=`<div class="ai-badge">✦ Claude</div><div style="font-size:12px;line-height:1.65">${d.content?.find(b=>b.type==='text')?.text||'Unable to generate.'}</div>`;
+  }catch{out.innerHTML=`<div class="ai-badge">✦ Claude</div><div style="font-size:12px">Could not connect to AI. Check API configuration.</div>`;}
+  btn.disabled=false;btn.textContent='✦ Cover Letter';
+}
+
+function manualApply(id,title,co){
+  APPS.unshift({jid:id,co,title,status:'applied',date:'just now',auto:false});
+  closeModal();showPanel('applications');showToast('Application sent to '+co);
+}
+
+function openCandModal(id){
+  const c=CANDS.find(x=>x.id===id);if(!c)return;
+  const m=openModal();
+  m.innerHTML=`<div class="mt">${c.name} <button class="xb" onclick="closeModal()">✕</button></div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+      <div class="cav" style="width:46px;height:46px;font-size:15px">${c.av}</div>
+      <div style="flex:1"><div style="font-size:15px;font-weight:600">${c.name}</div><div style="font-size:12px;color:var(--text2)">${c.title} · ${c.loc}</div><div style="font-size:11px;color:var(--green2)">$${Math.round(c.salary/1000)}k target</div></div>
+      ${ring(c.match,52,5)}
+    </div>
+    <div style="margin-bottom:12px">${c.skills.map(s=>`<span class="tag ex">${s}</span>`).join('')}</div>
+    <div class="stat-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:14px">
+      <div class="stat"><div class="sl">CV Score</div><div class="sv a" style="font-size:18px">${c.cvScore}</div></div>
+      <div class="stat"><div class="sl">Exp</div><div class="sv t" style="font-size:18px">${c.exp}yr</div></div>
+      <div class="stat"><div class="sl">Status</div><div style="font-size:12px;font-weight:600;color:${c.status==='active'?'var(--green2)':'var(--amber2)'};margin-top:8px">${c.status}</div></div>
+    </div>
+    <button class="btn btn-ghost btn-sm" style="width:100%;margin-bottom:10px" onclick="aiCandSum('${c.name}',${c.match},this)">✦ AI Summary</button>
+    <div class="air" id="cs-out" style="display:none"></div>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button class="btn btn-teal" style="flex:1" onclick="closeModal();openMsgModal([${c.id}])">✉ Message</button>
+      <button class="btn btn-ghost" onclick="closeModal();chatWith('${c.name}')">💬 Chat</button>
+      <button class="btn btn-ghost" onclick="starCand(${c.id},this)">${S.shortlisted.has(c.id)?'★':'☆'}</button>
+    </div>`;
+}
+
+async function aiCandSum(name,match,btn){
+  const out=document.getElementById('cs-out');out.style.display='block';
+  out.innerHTML=`<div class="ai-badge">✦ Claude</div><div class="typing"><span></span><span></span><span></span></div>`;
+  btn.disabled=true;
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:200,messages:[{role:'user',content:`Write a 2-sentence recruiter summary for ${name}, a senior software engineer candidate with a ${match}% match score for a React engineering role at a FinTech company. Highlight key strengths.`}]})});
+    const d=await r.json();
+    out.innerHTML=`<div class="ai-badge">✦ Claude</div><div style="font-size:12px;line-height:1.65">${d.content?.find(b=>b.type==='text')?.text||'Strong candidate.'}</div>`;
+  }catch{out.innerHTML=`<div class="ai-badge">✦ Claude</div><div style="font-size:12px">Could not connect to AI.</div>`;}
+  btn.disabled=false;btn.textContent='✦ AI Summary';
+}
+
+function buildJobsPanel(){
+  return JOBS.sort((a,b)=>b.match-a.match).map(jobCard).join('');
+}
+
+function buildCandidatePanels(){
+  const u=DC;
+  return `
+  <div class="panel" id="p-dash">
+    <div class="ph">Good morning, ${u.name.split(' ')[0]} 👋</div>
+    <p class="ps">Your daily match summary</p>
+    <div class="stat-grid">
+      <div class="stat"><div class="sl">Match Avg</div><div class="sv a">84%</div></div>
+      <div class="stat"><div class="sl">Jobs Matched</div><div class="sv t">24</div></div>
+      <div class="stat"><div class="sl">Applications</div><div class="sv am">${APPS.length}</div></div>
+      <div class="stat"><div class="sl">Profile Views</div><div class="sv g">12</div></div>
+    </div>
+    ${S.aaOn?`<div style="background:var(--greenbg);border:1px solid rgba(16,185,129,.2);border-radius:var(--r);padding:10px 14px;margin-bottom:16px;font-size:12px;color:var(--green2)">⚡ Auto-Apply is ON — applying to all jobs ≥ <span class="pill-pct">${S.aaThresh}%</span> match · ${JOBS.filter(j=>j.match>=S.aaThresh).length} eligible now</div>`:''}
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <div style="font-size:14px;font-weight:600">Top Matches</div>
+      <button class="btn btn-ghost btn-xs" onclick="showPanel('jobs')">View all →</button>
+    </div>
+    ${JOBS.slice(0,3).map(jobCard).join('')}
+  </div>
+
+  <div class="panel" id="p-jobs">
+    <div class="ph">Browse Jobs</div>
+    <p class="ps">Ranked by your match score · ${S.aaOn?`<span style="color:var(--green2)">⚡ Auto-Apply ON ≥${S.aaThresh}%</span>`:'<span style="color:var(--text3)">Auto-Apply off</span>'} · <span style="cursor:pointer;color:var(--accent2)" onclick="showPanel('auto-apply')">Configure →</span></p>
+    <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+      <input style="flex:1;min-width:160px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);color:var(--text);padding:7px 11px;font-size:12px;outline:none" placeholder="Search roles or companies...">
+      <select style="background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);color:var(--text);padding:7px 10px;font-size:12px"><option>All</option><option>Remote</option><option>SF</option></select>
+    </div>
+    ${buildJobsPanel()}
+  </div>
+
+  <div class="panel" id="p-applications">
+    <div class="ph">Applications</div>
+    <p class="ps">Your full application history</p>
+    ${APPS.map(a=>`
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:600">${a.title}${a.auto?'<span class="auto-fired-badge">⚡ Auto</span>':''}</div>
+            <div style="font-size:12px;color:var(--text2)">${a.co} · ${a.date}</div>
+          </div>
+          <span class="tag ${a.status==='shortlisted'?'sh':a.status==='viewed'?'vi':a.status==='rejected'?'rj':'ap'}">${a.status}</span>
+        </div>
+        <div style="display:flex;gap:6px;margin-top:10px">
+          ${['applied','viewed','shortlisted','offer'].map(s=>{const done=(['applied','viewed','shortlisted','offer'].indexOf(a.status)>=(['applied','viewed','shortlisted','offer'].indexOf(s)));return `<div style="flex:1;text-align:center"><div style="height:3px;border-radius:2px;margin-bottom:4px;background:${done?'var(--accent)':'var(--bg5)'}"></div><div style="font-size:9px;color:${done?'var(--accent2)':'var(--text3)'}">${s}</div></div>`;}).join('')}
+        </div>
+      </div>`).join('')}
+  </div>
+
+  <div class="panel" id="p-my-cv">
+    <div class="ph">My CV</div>
+    <p class="ps">Structured profile · CV score: <span style="color:var(--accent2)">${u.cvScore}/100</span></p>
+    <div style="display:flex;gap:16px;flex-wrap:wrap">
+      <div style="flex:1;min-width:240px">
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+            <div class="av c" style="width:44px;height:44px;font-size:15px">${u.name.split(' ').map(w=>w[0]).join('')}</div>
+            <div><div style="font-size:14px;font-weight:600">${u.name}</div><div style="font-size:12px;color:var(--text2)">${u.title}</div></div>
+          </div>
+          <div class="sh">Skills</div>
+          <div style="margin-bottom:12px">${u.skills.map(s=>`<span class="tag sk">${s}</span>`).join('')}</div>
+          <div class="sh">Experience</div>
+          ${u.exp.map(e=>`<div style="margin-bottom:12px"><div style="font-size:13px;font-weight:600">${e.role}</div><div style="font-size:11px;color:var(--teal2);margin-bottom:5px">${e.co} · ${e.dur}</div>${e.bullets.map(b=>`<div style="font-size:11px;color:var(--text2);padding-left:8px;border-left:2px solid var(--border2);margin-bottom:3px">${b}</div>`).join('')}</div>`).join('')}
+          <div class="sh">Education</div>
+          ${u.edu.map(e=>`<div style="font-size:13px;font-weight:600">${e.deg}</div><div style="font-size:11px;color:var(--text2)">${e.school} · ${e.yr}</div>`).join('')}
+        </div>
+      </div>
+      <div style="width:190px">
+        <div class="card">
+          <div class="sh">CV Health</div>
+          ${ring(u.cvScore,70,6)}
+          <div style="margin-top:8px;font-size:10px;color:var(--text3)">3 suggestions below</div>
+          <hr class="div">
+          <div style="font-size:11px;color:var(--text2);line-height:1.6">
+            <div style="padding:5px 0;border-bottom:1px solid var(--border)">⚠ Quantify 2 more bullets</div>
+            <div style="padding:5px 0;border-bottom:1px solid var(--border)">ℹ Add GitHub/portfolio</div>
+            <div style="padding:5px 0">⚠ Add cloud cert for target roles</div>
+          </div>
+          <button class="btn btn-primary btn-sm" style="width:100%;margin-top:12px" onclick="showPanel('ai-tools')">✦ Improve</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="p-chat">
+    <div class="ph">Chat</div>
+    <p class="ps">Messages from recruiters</p>
+    <div id="chat-panel"></div>
+  </div>
+
+  <div class="panel" id="p-ai-tools">
+    <div class="ph">✦ AI Tools</div>
+    <p class="ps">Claude-powered career optimization</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      ${[{t:'CV Optimizer',i:'📄',d:'Rewrite and strengthen for target roles',fn:'aiCVOpt'},{t:'Bullet Enhancer',i:'⚡',d:'Add action verbs and quantified outcomes',fn:'aiBullet'},{t:'Cover Letter',i:'✉',d:'Generate a tailored cover letter',fn:'aiCover'},{t:'Skill Gap',i:'🎯',d:'Find missing skills for target roles',fn:'aiSkillGap'}].map(t=>`
+        <div class="card">
+          <div style="font-size:22px;margin-bottom:8px">${t.i}</div>
+          <div style="font-size:14px;font-weight:600;margin-bottom:4px">${t.t}</div>
+          <div style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.5">${t.d}</div>
+          <button class="btn btn-primary btn-sm" onclick="runAITool('${t.fn}',this)">Generate</button>
+          <div class="air" id="ai-${t.fn}" style="display:none"></div>
+        </div>`).join('')}
+    </div>
+  </div>
+
+  <div class="panel" id="p-auto-apply">
+    <div class="ph">⚡ Auto-Apply</div>
+    <p class="ps">Set your threshold — we handle the rest</p>
+    <div id="aa-content"></div>
+  </div>`;
+}
+
+function buildRecruiterPanels(){
+  return `
+  <div class="panel" id="p-dash">
+    <div class="ph">Recruiter Dashboard</div>
+    <p class="ps">${S.user?.company||'Acme Corp'} · Hiring Portal</p>
+    <div class="qh-banner">
+      <div><div style="font-size:13px;font-weight:600;color:var(--rose2)">⚡ Quick Hire Mode</div><div style="font-size:11px;color:var(--text2);margin-top:2px">Surface top candidates for your most urgent role instantly</div></div>
+      <button class="btn btn-rose btn-sm" onclick="quickHire()">Activate →</button>
+    </div>
+    <div class="stat-grid">
+      <div class="stat"><div class="sl">Active Roles</div><div class="sv t">3</div></div>
+      <div class="stat"><div class="sl">Candidates</div><div class="sv a">47</div></div>
+      <div class="stat"><div class="sl">Shortlisted</div><div class="sv am" id="sl-count">0</div></div>
+      <div class="stat"><div class="sl">Responses</div><div class="sv g">8</div></div>
+    </div>
+    ${S.qaOn?`<div style="background:var(--greenbg);border:1px solid rgba(16,185,129,.2);border-radius:var(--r);padding:10px 14px;margin-bottom:16px;font-size:12px;color:var(--green2)">⚡ Auto-Hire is ON — surfacing candidates ≥ <span class="pill-pct">${S.qaThresh}%</span> · ${CANDS.filter(c=>c.match>=S.qaThresh).length} auto-matched</div>`:''}
+    <div style="font-size:13px;font-weight:600;margin-bottom:12px">Top Ranked Candidates</div>
+    ${CANDS.slice(0,3).map((c,i)=>candCard(c,i)).join('')}
+    <button class="btn btn-ghost btn-xs" style="width:100%;margin-top:4px" onclick="showPanel('cands')">View all →</button>
+  </div>
+
+  <div class="panel" id="p-post">
+    <div class="ph">Post a Role</div>
+    <p class="ps">Create a structured listing for smart matching</p>
+    <div class="card" style="max-width:520px">
+      <div class="field"><label>Role title</label><input placeholder="Senior React Engineer"></div>
+      <div class="fr">
+        <div class="field"><label>Experience</label><select><option>Junior</option><option>Mid</option><option selected>Senior</option><option>Staff</option></select></div>
+        <div class="field"><label>Type</label><select><option selected>Full-time</option><option>Contract</option></select></div>
+      </div>
+      <div class="fr">
+        <div class="field"><label>Min salary</label><input type="number" placeholder="120000"></div>
+        <div class="field"><label>Max salary</label><input type="number" placeholder="160000"></div>
+      </div>
+      <div class="field"><label>Location</label><select><option selected>Remote</option><option>San Francisco</option><option>New York</option></select></div>
+      <div class="field"><label>Required skills</label><input id="jsi" placeholder="React, TypeScript, Node.js" oninput="renderJST()"></div>
+      <div id="jst" style="margin-bottom:10px"></div>
+      <div class="field"><label>Description</label><textarea placeholder="Describe the role..."></textarea></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-teal" onclick="postJobFn(this)">Post Role</button>
+        <button class="btn btn-ghost btn-sm" onclick="aiJobImprove(this)">✦ AI Improve</button>
+      </div>
+      <div class="air" id="ai-job" style="display:none"></div>
+    </div>
+  </div>
+
+  <div class="panel" id="p-cands">
+    <div class="ph">Candidates</div>
+    <p class="ps">AI-ranked by match score · select multiple to message</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+      ${['All','Remote','SF','$100k+','Senior+','Active'].map((f,i)=>`<button class="filter-chip ${i===0?'on':''}" onclick="fchip(this)">${f}</button>`).join('')}
+      <button class="btn btn-ghost btn-xs" onclick="selectAll()">Select all</button>
+      <button class="btn btn-ghost btn-xs" onclick="clearSel()">Clear</button>
+    </div>
+    <div class="ms-bar" id="ms-bar" style="display:none">
+      <span class="ms-count" id="ms-count">0</span><span style="color:var(--text2)">selected</span>
+      <div style="flex:1"></div>
+      <button class="btn btn-teal btn-xs" onclick="msgSelected()">✉ Message Selected</button>
+      <button class="btn btn-ghost btn-xs" onclick="clearSel();renderCands()">Clear</button>
+    </div>
+    <div id="cand-list">${CANDS.map((c,i)=>candCard(c,i)).join('')}</div>
+  </div>
+
+  <div class="panel" id="p-shortlist">
+    <div class="ph">Shortlist</div>
+    <p class="ps">Starred candidates for review</p>
+    <div id="sl-panel"><div style="text-align:center;padding:30px;color:var(--text3);font-size:13px">Star candidates from the Candidates tab</div></div>
+  </div>
+
+  <div class="panel" id="p-messages">
+    <div class="ph">Messages</div>
+    <p class="ps">Bulk outreach to candidates · AI-assisted</p>
+    <div style="display:flex;gap:8px;margin-bottom:16px">
+      <button class="btn btn-teal" onclick="openMsgModal(CANDS.slice(0,3).map(c=>c.id))">✉ Message Top 3</button>
+      <button class="btn btn-ghost" onclick="openMsgModal(CANDS.filter(c=>c.match>=70).map(c=>c.id))">Message ≥70% Match</button>
+      <button class="btn btn-ghost" onclick="openMsgModal(CANDS.filter(c=>c.match>=80).map(c=>c.id))">Message ≥80% Match</button>
+    </div>
+    <div class="sh">Recent outreach</div>
+    ${['Alex Chen','Jordan Lee','Maya Patel'].map(n=>`
+      <div class="card" style="cursor:pointer;padding:12px 14px" onclick="chatWith('${n}')">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="cav" style="width:32px;height:32px;font-size:11px">${n.split(' ').map(w=>w[0]).join('')}</div>
+          <div style="flex:1"><div style="font-size:13px;font-weight:500">${n}</div><div style="font-size:11px;color:var(--text3)">${S.chats[n]?.msgs.slice(-1)[0]?.text?.slice(0,50)||'Message sent'}...</div></div>
+          <button class="btn btn-ghost btn-xs" onclick="event.stopPropagation();chatWith('${n}')">Reply →</button>
+        </div>
+      </div>`).join('')}
+  </div>
+
+  <div class="panel" id="p-chat">
+    <div class="ph">Chat</div>
+    <p class="ps">Direct messages with candidates</p>
+    <div id="chat-panel"></div>
+  </div>
+
+  <div class="panel" id="p-auto-hire">
+    <div class="ph">⚡ Auto-Hire</div>
+    <p class="ps">Set threshold · surface and invite top candidates automatically</p>
+    <div id="ah-content"></div>
+  </div>
+
+  <div class="panel" id="p-co-profile">
+    <div class="ph">Company Profile</div>
+    <p class="ps">How candidates see your company</p>
+    <div class="card" style="max-width:480px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+        <div class="av r" style="width:46px;height:46px;font-size:15px">${(S.user?.name||'SC').split(' ').map(w=>w[0]).join('')}</div>
+        <div><div style="font-size:15px;font-weight:600">${S.user?.company||'Acme Corp'}</div><div style="font-size:12px;color:var(--text2)">FinTech · San Francisco</div></div>
+      </div>
+      <div class="field"><label>Company name</label><input value="${S.user?.company||'Acme Corp'}"></div>
+      <div class="fr"><div class="field"><label>Industry</label><input value="FinTech"></div><div class="field"><label>Size</label><select><option>1-10</option><option>11-50</option><option selected>51-200</option></select></div></div>
+      <div class="field"><label>Description</label><textarea>Building next-gen financial tools for developers worldwide.</textarea></div>
+      <button class="btn btn-teal">Save profile</button>
+    </div>
+  </div>`;
+}
+
+function msgSelected(){
+  if(S.sel.size===0)return;
+  openMsgModal([...S.sel]);
+}
+
+function fchip(el){document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');}
+function renderJST(){const v=document.getElementById('jsi').value;document.getElementById('jst').innerHTML=v.split(',').map(s=>s.trim()).filter(Boolean).map(s=>`<span class="tag sk">${s}</span>`).join('');}
+
+function postJobFn(btn){btn.textContent='✓ Posted!';btn.className='btn btn-green';setTimeout(()=>{btn.textContent='Post Role';btn.className='btn btn-teal';},2500);}
+
+async function aiJobImprove(btn){
+  const out=document.getElementById('ai-job');out.style.display='block';
+  out.innerHTML=`<div class="ai-badge">✦ Claude</div><div class="typing"><span></span><span></span><span></span></div>`;
+  btn.disabled=true;
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:200,messages:[{role:'user',content:'Write a compelling 3-sentence job description for a Senior React Engineer at a FinTech startup. Focus on impact, growth, and modern tech stack. Be specific and exciting.'}]})});
+    const d=await r.json();
+    out.innerHTML=`<div class="ai-badge">✦ Claude</div><div style="font-size:12px;line-height:1.65">${d.content?.find(b=>b.type==='text')?.text||'Could not generate.'}</div>`;
+  }catch{out.innerHTML=`<div class="ai-badge">✦ Claude</div><div style="font-size:12px">Could not connect.</div>`;}
+  btn.disabled=false;btn.textContent='✦ AI Improve';
+}
+
+const AI_PROMPTS={
+  aiCVOpt:`You are a CV expert. Give 3 specific, actionable CV improvements for Alex Chen, Senior Frontend Engineer (React, TypeScript, Node.js, Stripe/Airbnb background) targeting Staff Engineer roles. Be concrete.`,
+  aiBullet:`Improve this bullet using STAR method: "Led redesign of payment UI increasing conversion by 23%". Give 2 stronger alternatives with stronger action verbs. Max 20 words each.`,
+  aiCover:`Write a 3-sentence cover letter opening for Alex Chen, Sr Frontend Engineer, applying to a top-tier tech company. Confident, specific, non-generic.`,
+  aiSkillGap:`Alex Chen targets Staff/Principal Frontend roles. Skills: React, TypeScript, GraphQL, Node.js, AWS. List top 3 skill gaps with a 1-line reason each. Be direct.`,
+};
+
+async function runAITool(fn,btn){
+  const out=document.getElementById('ai-'+fn);out.style.display='block';
+  out.innerHTML=`<div class="ai-badge">✦ Claude</div><div class="typing"><span></span><span></span><span></span></div>`;
+  btn.disabled=true;btn.textContent='Generating...';
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:300,messages:[{role:'user',content:AI_PROMPTS[fn]||'Generate helpful career advice.'}]})});
+    const d=await r.json();
+    out.innerHTML=`<div class="ai-badge">✦ Claude</div><div style="font-size:12px;line-height:1.65">${(d.content?.find(b=>b.type==='text')?.text||'').replace(/\n/g,'<br>')}</div>`;
+  }catch{out.innerHTML=`<div class="ai-badge">✦ Claude</div><div style="font-size:12px">Could not connect to AI. Check API config.</div>`;}
+  btn.disabled=false;btn.textContent='Generate';
+}
+
+function quickHire(){
+  const m=openModal();
+  const top=CANDS.slice(0,3);
+  m.innerHTML=`<div class="mt">⚡ Quick Hire Mode <button class="xb" onclick="closeModal()">✕</button></div>
+    <p style="font-size:12px;color:var(--text2);margin-bottom:14px">Top 3 candidates for <strong>Senior React Engineer</strong> — ranked by AI match score</p>
+    ${top.map((c,i)=>`
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
+        <div class="rb ${['r1','r2','r3'][i]}">${i+1}</div>
+        <div class="cav" style="width:34px;height:34px;font-size:11px">${c.av}</div>
+        <div style="flex:1"><div style="font-size:13px;font-weight:600">${c.name}</div><div style="font-size:11px;color:var(--text2)">${c.title}</div></div>
+        ${ring(c.match,38,4)}
+        <button class="btn btn-teal btn-xs" onclick="closeModal();openMsgModal([${c.id}])">Invite</button>
+      </div>`).join('')}
+    <button class="btn btn-teal" style="width:100%;margin-top:14px" onclick="closeModal();openMsgModal(${JSON.stringify(top.map(c=>c.id))})">✉ Message All 3</button>`;
+}
+
+showLanding();
+</script>
