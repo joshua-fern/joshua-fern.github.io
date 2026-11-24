@@ -1,0 +1,27 @@
+/* === Site B: pure black (#000) and white (#fff) only. Figures are greyscale images. === */
+:root{--b:#000;--w:#fff}*{box-sizing:border-box}
+body{margin:0;background:var(--w);color:var(--b);font:17px/1.6 "Inter Tight","Helvetica Neue",Arial,sans-serif}
+a{color:inherit}.wrap{max-width:1000px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-weight:700;letter-spacing:-.02em;line-height:1.05;margin:0}
+.mono,.eyebrow,nav,footer,.row i,.row span,.stats span,th,.btn,.sec>small{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12.5px;text-transform:uppercase;letter-spacing:.04em}
+nav .wrap{display:flex;gap:20px;align-items:center;height:60px;border-bottom:2px solid var(--b)}nav b{margin-right:auto}nav a{text-decoration:none}nav a:hover{text-decoration:underline}
+.hero{padding:96px 0 56px}.hero h1{font-size:clamp(46px,9vw,108px);margin:14px 0 20px}.hero p{max-width:600px;margin:0}
+.row{display:grid;grid-template-columns:48px 1fr auto 32px;gap:20px;align-items:center;padding:28px 16px;border-top:2px solid var(--b);text-decoration:none}.row:last-child{border-bottom:2px solid var(--b)}
+.row h2{font-size:clamp(28px,4vw,44px)}.row p{margin:6px 0 0;max-width:520px}.row .m{text-align:right}.row .m b{display:block;font-size:22px}.row em{font-style:normal;font-size:26px}
+.row:hover{background:var(--b);color:var(--w)}
+@media(max-width:700px){.row{grid-template-columns:1fr auto;gap:8px}.row i,.row .m{display:none}}
+.ph{padding:72px 0 32px}.ph h1{font-size:clamp(44px,8vw,96px);margin:14px 0}.ph p{font-size:21px;max-width:680px;margin:0 0 20px}
+.btn{display:inline-block;border:2px solid var(--b);background:var(--w);color:var(--b);padding:10px 14px;cursor:pointer;text-decoration:none}.btn:hover{background:var(--b);color:var(--w)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));border-block:2px solid var(--b);margin-top:32px}
+.stats div{padding:22px 20px;border-right:2px solid var(--b)}.stats div:last-child{border-right:0}.stats b{display:block;font-size:30px;letter-spacing:-.02em}
+.sec{padding:56px 0;border-bottom:2px solid var(--b)}.sec>small{display:block;margin-bottom:14px}.sec h3{font-size:26px;margin-bottom:8px}.sec p{margin:0;max-width:720px}
+.item{padding:20px 0;border-top:1px solid var(--b)}.item:first-of-type{border-top:0;padding-top:0}
+table{border-collapse:collapse;width:100%;margin-bottom:28px}th,td{text-align:left;vertical-align:top;padding:12px 8px;border-top:1px solid var(--b)}th{width:34%}td{font-size:16px}
+figure{margin:28px 0 0}figure img{width:100%;display:block;border:2px solid var(--b)}figcaption{font-size:14px;padding-top:8px}
+ul{padding-left:20px;max-width:720px}li{margin-bottom:10px}
+.cta{display:flex;gap:10px;flex-wrap:wrap;padding:32px 0}
+footer .wrap{padding:36px 24px;display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between}footer a{text-decoration:underline}
+/* NØLL on Site B: strictly monochrome overrides */
+.noll[data-mode="founder"] .noll-panel{box-shadow:none}.noll[data-mode="founder"] .noll-think{color:#000}.noll[data-mode="founder"] .noll-msg{border-color:#000}
+.noll[data-mode="founder"] .noll-chip.on,.noll[data-mode="founder"] .noll-msg.me{background:#000;color:#fff}.noll[data-mode="founder"] .noll-chips,.noll[data-mode="founder"] .noll-form{border-top-color:#000}
+.noll[data-mode="founder"] .noll-send,.noll[data-mode="founder"] .noll-chat button{background:#000}
