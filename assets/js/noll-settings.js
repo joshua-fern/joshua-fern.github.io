@@ -11,7 +11,7 @@ window.NOLL_SETTINGS = {
   WELCOME: "Hi, I'm NØLL. Ask me anything about Joshua's ventures, or tick the documents you'd like emailed.",   // first chat message
 
   CONTACT: {                                              // <-- 2. shown by the "Contact Joshua" chip
-    email: "PUT-YOUR-FOUNDER-EMAIL@example.com",          //     FOUNDER EMAIL (different from the engineering one)
+    email: "joshua.srfdo@gmail.com",          //     FOUNDER EMAIL (different from the engineering one)
     linkedin: ""                                          //     optional
   },
 
